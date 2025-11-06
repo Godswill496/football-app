@@ -1,5 +1,6 @@
 package ie.setu
 
+import ie.setu.utils.readNextInt
 
 fun mainMenu(): Int {
         print("""
@@ -16,7 +17,7 @@ fun mainMenu(): Int {
         > |   0) Exit                 |
         > =============================
         > ==> """.trimMargin(">"))
-        return readLine()?.toIntOrNull() ?: -1
+        return readNextInt(" > Enter option: ")
 }
 
 fun runMenu() {
@@ -39,6 +40,7 @@ fun main() {
         println("Welcome to the Football App!")
         runMenu()
 }
+
 
 
 
