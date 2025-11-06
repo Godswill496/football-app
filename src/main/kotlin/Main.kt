@@ -1,52 +1,44 @@
 package ie.setu
 
 
-fun main() {
+fun mainMenu(): Int {
+        print("""
+        > =============================
+        > |      FOOTBALL APP         |
+        > =============================
+        > | MAIN MENU                 |
+        > |   1) Add Player           |
+        > |   2) Add Match            |
+        > |   3) Record Player in Match|
+        > |   4) List All Players      |
+        > |   5) Match Summary         |
+        > =============================
+        > |   0) Exit                 |
+        > =============================
+        > ==> """.trimMargin(">"))
+        return readLine()?.toIntOrNull() ?: -1
+}
+
+fun runMenu() {
         var choice: Int
-
         do {
-                println(
-                        """
-            |=============================
-            | Football App - Main Menu
-            |=============================
-            | 1. Add Player
-            | 2. Add Match
-            | 3. Record Player in Match
-            | 4. List All Players (by salary)
-            | 5. Match Summary
-            | 0. Exit
-            |-----------------------------
-            """.trimMargin("|")
-                )
-                print("> ")
-                choice = readLine()?.trim()?.toIntOrNull() ?: -1
-
+                choice = mainMenu()
                 when (choice) {
-                        1 -> {
-                                println("Add Player selected")
-                                // Placeholder: will integrate PlayerController later
-                        }
-                        2 -> {
-                                println("Add Match selected")
-                                // Placeholder: will integrate MatchController later
-                        }
-                        3 -> {
-                                println("Record Player in Match selected")
-                                // Placeholder: will integrate MatchPlayerController later
-                        }
-                        4 -> {
-                                println("List All Players selected")
-                                // Placeholder: will integrate PlayerController later
-                        }
-                        5 -> {
-                                println("Match Summary selected")
-                                // Placeholder: will integrate MatchController & MatchPlayerController later
-                        }
+                        1 -> println("Add Player selected")
+                        2 -> println("Add Match selected")
+                        3 -> println("Record Player in Match selected")
+                        4 -> println("List All Players selected")
+                        5 -> println("Match Summary selected")
                         0 -> println("Exiting Football App...")
-                        else -> println("Invalid choice, please try again.")
+                        else -> println("Invalid option entered: ${choice}")
                 }
         } while (choice != 0)
 }
+
+fun main() {
+        println("Welcome to the Football App!")
+        runMenu()
+}
+
 
 
