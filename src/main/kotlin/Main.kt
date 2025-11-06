@@ -1,6 +1,10 @@
 package ie.setu
 
 import ie.setu.utils.readNextInt
+import io.github.oshai.kotlinlogging.KotlinLogging
+
+private val logger = KotlinLogging.logger {}
+
 
 fun mainMenu(): Int {
         print("""
@@ -25,19 +29,19 @@ fun runMenu() {
         do {
                 choice = mainMenu()
                 when (choice) {
-                        1 -> println("Add Player selected")
-                        2 -> println("Add Match selected")
-                        3 -> println("Record Player in Match selected")
-                        4 -> println("List All Players selected")
-                        5 -> println("Match Summary selected")
-                        0 -> println("Exiting Football App...")
-                        else -> println("Invalid option entered: ${choice}")
+                        1 -> logger.info { "Add Player selected" }
+                        2 -> logger.info { "Add Match selected" }
+                        3 -> logger.info { "Record Player in Match selected" }
+                        4 -> logger.info { "List All Players selected" }
+                        5 -> logger.info { "Match Summary selected" }
+                        0 -> logger.info { "Exiting Football App..." }
+                        else -> logger.warn { "Invalid option entered: ${choice}" }
                 }
         } while (choice != 0)
 }
 
 fun main() {
-        println("Welcome to the Football App!")
+        logger.info { "Welcome to the Football App!" }
         runMenu()
 }
 
