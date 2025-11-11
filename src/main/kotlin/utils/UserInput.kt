@@ -1,9 +1,7 @@
 package ie.setu.utils
 
-// Simple safe Int read, returns -1 if input is invalid
 fun readIntNotNull() = readLine()?.toIntOrNull() ?: -1
 
-// Reads Int and keeps prompting until user enters a valid number
 fun readNextInt(prompt: String?): Int {
     do {
         try {
@@ -15,7 +13,6 @@ fun readNextInt(prompt: String?): Int {
     } while (true)
 }
 
-// Reads Double and keeps prompting until valid
 fun readNextDouble(prompt: String?): Double {
     do {
         try {
@@ -27,7 +24,6 @@ fun readNextDouble(prompt: String?): Double {
     } while (true)
 }
 
-// Reads Float and keeps prompting until valid
 fun readNextFloat(prompt: String?): Float {
     do {
         try {
@@ -39,13 +35,11 @@ fun readNextFloat(prompt: String?): Float {
     } while (true)
 }
 
-// Reads a full line of text
 fun readNextLine(prompt: String?): String {
     print(prompt)
     return readLine()!!.trim()
 }
 
-// Reads a single character, keeps prompting if invalid
 fun readNextChar(prompt: String?): Char {
     do {
         try {
@@ -56,3 +50,4 @@ fun readNextChar(prompt: String?): Char {
         }
     } while (true)
 }
+
