@@ -1,7 +1,7 @@
 package ie.setu.models
 
 data class Match(
-    val matchId: Int,
+    var matchId: Int,
     val matchName: String,
     val matchLocation: String,
     val managerOnDuty: String

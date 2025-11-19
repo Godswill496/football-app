@@ -1,7 +1,7 @@
 package ie.setu.models
 
 data class MatchPlayer(
-    val id: Int,
+    var id: Int,
     val matchId: Int,
     val playerId: Int,
     val playPosition: String,

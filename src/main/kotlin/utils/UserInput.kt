@@ -1,12 +1,13 @@
 package ie.setu.utils
 
-fun readIntNotNull() = readLine()?.toIntOrNull() ?: -1
+
+fun readIntNotNull() = readlnOrNull()?.toIntOrNull() ?: -1
 
 fun readNextInt(prompt: String?): Int {
     do {
         try {
             print(prompt)
-            return readLine()!!.toInt()
+            return readln().toInt()
         } catch (e: NumberFormatException) {
             System.err.println("\tEnter a number please.")
         }
@@ -17,9 +18,9 @@ fun readNextDouble(prompt: String?): Double {
     do {
         try {
             print(prompt)
-            return readLine()!!.toDouble()
+            return readln().toDouble()
         } catch (e: NumberFormatException) {
-            System.err.println("\tEnter a valid decimal number.")
+            System.err.println("\tEnter a valid decimal number please.")
         }
     } while (true)
 }
@@ -28,26 +29,28 @@ fun readNextFloat(prompt: String?): Float {
     do {
         try {
             print(prompt)
-            return readLine()!!.toFloat()
+            return readln().toFloat()
         } catch (e: NumberFormatException) {
-            System.err.println("\tEnter a valid float number.")
+            System.err.println("\tEnter a valid floating number please.")
         }
     } while (true)
 }
 
 fun readNextLine(prompt: String?): String {
     print(prompt)
-    return readLine()!!.trim()
+    return readln()
 }
 
 fun readNextChar(prompt: String?): Char {
     do {
         try {
             print(prompt)
-            return readLine()!!.first()
+            return readln().first()
         } catch (e: Exception) {
             System.err.println("\tEnter a character please.")
         }
     } while (true)
 }
+
+
 

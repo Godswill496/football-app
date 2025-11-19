@@ -1,7 +1,7 @@
-package models
+package ie.setu.models
 
 data class Player(
-    val playerId: Int,
+    var playerId: Int,
     val dateOfBirth: String,
     val name: String,
     val shirtNo: Int,
