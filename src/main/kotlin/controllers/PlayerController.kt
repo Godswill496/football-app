@@ -14,4 +14,7 @@ class PlayerController {
     }
 
     fun listPlayers() = players
-}
+
+    fun listPlayersBySalaryIncreasing(): List<Player> {
+        return players.sortedBy { it.salary }
+    }}
