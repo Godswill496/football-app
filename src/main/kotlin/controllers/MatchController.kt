@@ -14,5 +14,21 @@ class MatchController {
         matches.add(match)
     }
 
-    fun listMatches() = matches
+    fun listMatches(): List<Match> {
+        return matches
 }
+fun numberOfMatches(): Int {
+    return matches.size
+}
+
+fun findMatch(index: Int): Match? {
+    return if (isValidListIndex(index, matches)) {
+        matches[index]
+    } else null
+}
+
+
+fun isValidListIndex(index: Int, list: List<Any>): Boolean {
+    return (index >= 0 && index < list.size)
+}}
+

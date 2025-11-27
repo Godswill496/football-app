@@ -17,4 +17,19 @@ class PlayerController {
 
     fun listPlayersBySalaryIncreasing(): List<Player> {
         return players.sortedBy { it.salary }
+    }
+
+    fun numberOfPlayers(): Int {
+        return players.size
+    }
+
+    fun findPlayer(index: Int): Player? {
+        return if (isValidListIndex(index, players)) {
+            players[index]
+        } else null
+    }
+
+    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
+        return (index >= 0 && index < list.size)
     }}
+
