@@ -35,4 +35,21 @@ MatchControllerTest
 
 MatchPlayerControllerTest
 
-Added new tests for filtering, searching, and counting
+## Added new tests for filtering, searching, and counting
+
+1. Archive Player (Mark Player as Injured)
+
+A new menu option lets you archive (injure) a player.
+
+Only players who are not injured are shown.
+
+## Users select the index of the player to archive.
+Player Listing Sub-Menu
+
+##Menu option 2) List Players now opens a sub-menu:
+
+List all players
+
+List fit (active) players
+
+List injured (archived) players
