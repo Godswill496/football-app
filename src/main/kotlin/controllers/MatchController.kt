@@ -1,6 +1,7 @@
 package ie.setu.controllers
 
 import ie.setu.models.Match
+import ie.setu.utils.formatPlayerList
 
 
 class MatchController {

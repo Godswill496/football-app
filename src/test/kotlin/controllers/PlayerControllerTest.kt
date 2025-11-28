@@ -8,8 +8,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import ie.setu.models.Player
+import kotlin.test.assertFalse
 
-    class PlayerControllerTest {
+class PlayerControllerTest {
 
         private var ronaldo: Player? = null
         private var messi: Player? = null
@@ -36,6 +37,41 @@ import ie.setu.models.Player
             mbappe = null
             populatedPlayers = null
             emptyPlayers = null
+        }
+
+        @Nested
+        inner class FitPlayers {
+
+            @Test
+            fun `listFitPlayers returns players who are not injured`() {
+                val result = populatedPlayers!!.listFitPlayers()
+                assertTrue(result.contains("Ronaldo"))
+                assertTrue(result.contains("Mbappe"))
+                assertFalse(result.contains("Messi"))
+            }
+
+            @Test
+            fun `numberOfFitPlayers counts correctly`() {
+                assertEquals(2, populatedPlayers!!.numberOfFitPlayers())
+                assertEquals(0, emptyPlayers!!.numberOfFitPlayers())
+            }
+        }
+
+        @Nested
+        inner class InjuredPlayers {
+
+            @Test
+            fun `listInjuredPlayers returns only injured players`() {
+                val result = populatedPlayers!!.listInjuredPlayers()
+                assertTrue(result.contains("Messi"))
+                assertFalse(result.contains("Ronaldo"))
+            }
+
+            @Test
+            fun `numberOfInjuredPlayers counts correctly`() {
+                assertEquals(1, populatedPlayers!!.numberOfInjuredPlayers())
+                assertEquals(0, emptyPlayers!!.numberOfInjuredPlayers())
+            }
         }
 
         @Nested

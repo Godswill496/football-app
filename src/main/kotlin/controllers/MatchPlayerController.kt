@@ -4,7 +4,7 @@ import ie.setu.models.MatchPlayer
 
 class MatchPlayerController {
 
-    private var matchPlayers = ArrayList<MatchPlayer>()
+    private val matchPlayers = ArrayList<MatchPlayer>()
     private var lastId = 0
     private fun getNextId() = lastId++
 
@@ -13,23 +13,50 @@ class MatchPlayerController {
         return matchPlayers.add(matchPlayer)
     }
 
-    fun listPlayersInMatch(matchId: Int): List<MatchPlayer> {
-        return matchPlayers.filter { it.matchId == matchId }
-    }
 
-    fun numberOfMatchPlayers(): Int {
-        return matchPlayers.size
-    }
+    fun listPlayersInMatch(matchId: Int): List<MatchPlayer> =
+        matchPlayers.filter { matchPlayer -> matchPlayer.matchId == matchId }
 
-    fun findMatchPlayer(index: Int): MatchPlayer? {
-        return if (isValidListIndex(index, matchPlayers)) {
-            matchPlayers[index]
-        } else null
-    }
+    fun listPlayedMatchPlayers(): List<MatchPlayer> =
+        matchPlayers.filter { matchPlayer -> matchPlayer.isPlayed }
 
-    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-        return (index >= 0 && index < list.size)
-    }
+    fun listNotPlayedMatchPlayers(): List<MatchPlayer> =
+        matchPlayers.filter { matchPlayer -> !matchPlayer.isPlayed }
+
+
+    fun numberOfMatchPlayers(): Int =
+        matchPlayers.size
+
+    fun numberOfPlayedMatchPlayers(): Int =
+        matchPlayers.count { matchPlayer -> matchPlayer.isPlayed }
+
+    fun numberOfNotPlayedMatchPlayers(): Int =
+        matchPlayers.count { matchPlayer -> !matchPlayer.isPlayed }
+
+
+    fun findMatchPlayer(index: Int): MatchPlayer? =
+        if (isValidListIndex(index, matchPlayers)) matchPlayers[index] else null
+
+    fun isValidListIndex(index: Int, list: List<Any>): Boolean =
+        (index >= 0 && index < list.size)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
