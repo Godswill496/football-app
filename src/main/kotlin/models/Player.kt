@@ -2,11 +2,11 @@ package ie.setu.models
 
 data class Player(
     var playerId: Int,
-    val dateOfBirth: String,
-    val name: String,
-    val shirtNo: Int,
-    val salary: Double,
-    val preferredPlayPosition: String,
-    val isInjured: Boolean
+    var dateOfBirth: String,
+    var name: String,
+    var shirtNo: Int,
+    var salary: Double,
+    var preferredPlayPosition: String,
+    var isInjured: Boolean
 )
 
