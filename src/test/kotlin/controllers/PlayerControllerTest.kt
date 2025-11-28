@@ -6,7 +6,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import ie.setu.models.Player
+import ie.setu.persistence.XMLSerializer
 import org.junit.jupiter.api.Assertions.*
+import java.io.File
 import kotlin.test.assertFalse
 
 class PlayerControllerTest {
@@ -15,8 +17,8 @@ class PlayerControllerTest {
         private var messi: Player? = null
         private var mbappe: Player? = null
 
-        private var populatedPlayers: PlayerController? = PlayerController()
-        private var emptyPlayers: PlayerController? = PlayerController()
+        private var populatedPlayers: PlayerController? = PlayerController(XMLSerializer(File("players.xml")))
+        private var emptyPlayers: PlayerController? = PlayerController(XMLSerializer(File("empty-players.xml")))
 
         @BeforeEach
         fun setup() {
@@ -167,6 +169,41 @@ class PlayerControllerTest {
                     assertEquals(200000.0, populatedPlayers!!.findPlayer(2)!!.salary)
                     assertEquals("Winger", populatedPlayers!!.findPlayer(2)!!.preferredPlayPosition)
                 }
+
+                @Nested
+                inner class PlayerPersistenceTests {
+
+                    @Test
+                    fun `saving and loading empty player list does not crash`() {
+                        val storing = PlayerController(XMLSerializer(File("players.xml")))
+                        storing.store()
+
+                        val loaded = PlayerController(XMLSerializer(File("players.xml")))
+                        loaded.load()
+
+                        assertEquals(0, storing.numberOfPlayers())
+                        assertEquals(0, loaded.numberOfPlayers())
+                    }
+
+                    @Test
+                    fun `saving and loading populated player list retains data`() {
+                        val storing = PlayerController(XMLSerializer(File("players.xml")))
+                        val p1 = Player(0, "1990-01-01", "Ronaldo", 7, 500000.0, "Striker", false)
+                        val p2 = Player(0, "1987-06-24", "Messi", 10, 600000.0, "Forward", false)
+
+                        storing.addPlayer(p1)
+                        storing.addPlayer(p2)
+                        storing.store()
+
+                        val loaded = PlayerController(XMLSerializer(File("players.xml")))
+                        loaded.load()
+
+                        assertEquals(2, loaded.numberOfPlayers())
+                        assertEquals(p1, loaded.findPlayer(0))
+                        assertEquals(p2, loaded.findPlayer(1))
+                    }
+                }
+
             }
 
 
