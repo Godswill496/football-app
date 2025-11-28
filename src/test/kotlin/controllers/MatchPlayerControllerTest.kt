@@ -1,6 +1,7 @@
 package ie.setu.controllers
 
 import ie.setu.models.MatchPlayer
+import ie.setu.persistence.JSONSerializer
 import ie.setu.persistence.XMLSerializer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
@@ -167,7 +168,44 @@ class MatchPlayerControllerTest {
             }
         }
 
+        @Nested
+        inner class JsonPersistenceTests {
 
-    }
-}
+            @Test
+            fun `saving and loading an empty match player list doesn't crash`() {
+                val storing = MatchPlayerController(JSONSerializer(File("matchplayers.json")))
+                storing.store()
+
+                val loaded = MatchPlayerController(JSONSerializer(File("matchplayers.json")))
+                loaded.load()
+
+                assertEquals(0, storing.numberOfMatchPlayers())
+                assertEquals(0, loaded.numberOfMatchPlayers())
+                assertEquals(storing.numberOfMatchPlayers(), loaded.numberOfMatchPlayers())
+            }
+
+            @Test
+            fun `saving and loading a populated match player list keeps data`() {
+                val storing = MatchPlayerController(JSONSerializer(File("matchplayers.json")))
+
+                val mp1 = MatchPlayer(0, 1, 10, "Striker", 2, true, 90)
+                val mp2 = MatchPlayer(0, 1, 11, "Midfielder", 0, true, 80)
+                val mp3 = MatchPlayer(0, 2, 12, "Defender", 1, false, 0)
+
+                storing.addPlayerToMatch(mp1)
+                storing.addPlayerToMatch(mp2)
+                storing.addPlayerToMatch(mp3)
+                storing.store()
+
+                val loaded = MatchPlayerController(JSONSerializer(File("matchplayers.json")))
+                loaded.load()
+
+                assertEquals(3, loaded.numberOfMatchPlayers())
+                assertEquals(storing.findMatchPlayer(0), loaded.findMatchPlayer(0))
+                assertEquals(storing.findMatchPlayer(1), loaded.findMatchPlayer(1))
+                assertEquals(storing.findMatchPlayer(2), loaded.findMatchPlayer(2))
+            }
+        }
+
+    }}
 

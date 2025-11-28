@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import ie.setu.models.Match
+import ie.setu.persistence.JSONSerializer
 import ie.setu.persistence.XMLSerializer
 import org.junit.jupiter.api.Assertions.*
 import java.io.File
@@ -135,6 +136,39 @@ class MatchControllerTest {
                 assertEquals(storingMatches.findMatch(0), loadedMatches.findMatch(0))
                 assertEquals(storingMatches.findMatch(1), loadedMatches.findMatch(1))
                 assertEquals(storingMatches.findMatch(2), loadedMatches.findMatch(2))
+            }
+        }
+
+        @Nested
+        inner class JsonPersistenceTests {
+
+            @Test
+            fun `saving and loading an empty match list doesn't crash`() {
+                val storing = MatchController(JSONSerializer(File("matches.json")))
+                storing.store()
+
+                val loaded = MatchController(JSONSerializer(File("matches.json")))
+                loaded.load()
+
+                assertEquals(0, storing.numberOfMatches())
+                assertEquals(0, loaded.numberOfMatches())
+            }
+
+            @Test
+            fun `saving and loading a populated match list keeps data`() {
+                val storing = MatchController(JSONSerializer(File("matches.json")))
+                storing.addMatch(match1!!)
+                storing.addMatch(match2!!)
+                storing.addMatch(match3!!)
+                storing.store()
+
+                val loaded = MatchController(JSONSerializer(File("matches.json")))
+                loaded.load()
+
+                assertEquals(3, loaded.numberOfMatches())
+                assertEquals(storing.findMatch(0), loaded.findMatch(0))
+                assertEquals(storing.findMatch(1), loaded.findMatch(1))
+                assertEquals(storing.findMatch(2), loaded.findMatch(2))
             }
         }
 

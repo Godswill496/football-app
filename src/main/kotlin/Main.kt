@@ -6,6 +6,7 @@ import ie.setu.controllers.PlayerController
 import ie.setu.models.Player
 import ie.setu.models.Match
 import ie.setu.models.MatchPlayer
+import ie.setu.persistence.JSONSerializer
 import ie.setu.persistence.XMLSerializer
 import ie.setu.utils.readNextDouble
 import ie.setu.utils.readNextInt
@@ -16,9 +17,10 @@ import java.io.File
 
 
 private val logger = KotlinLogging.logger {}
-private val playerController = PlayerController(XMLSerializer(File("players.xml")))
-private val matchController = MatchController(XMLSerializer(File("matches.xml")))
-private val matchPlayerController = MatchPlayerController(XMLSerializer(File("matchplayers.xml")))
+private val playerController = PlayerController(JSONSerializer(File("players.json")))
+private val matchController = MatchController(JSONSerializer(File("matches.json")))
+private val matchPlayerController = MatchPlayerController(JSONSerializer(File("matchplayer.json")))
+
 
 
 

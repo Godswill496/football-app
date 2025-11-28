@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import ie.setu.models.Player
+import ie.setu.persistence.JSONSerializer
 import ie.setu.persistence.XMLSerializer
 import org.junit.jupiter.api.Assertions.*
 import java.io.File
@@ -205,6 +206,38 @@ class PlayerControllerTest {
                 }
 
             }
+            @Nested
+            inner class JsonPersistenceTests {
+
+                @Test
+                fun `saving and loading empty Player list doesn't crash`() {
+                    val storing = PlayerController(JSONSerializer(File("players.json")))
+                    storing.store()
+
+                    val loaded = PlayerController(JSONSerializer(File("players.json")))
+                    loaded.load()
+
+                    assertEquals(0, storing.numberOfPlayers())
+                    assertEquals(0, loaded.numberOfPlayers())
+                }
+
+                @Test
+                fun `saving and loading populated Player list does not lose data`() {
+                    val storing = PlayerController(JSONSerializer(File("players.json")))
+
+                    storing.addPlayer(Player(0,"1990-01-01","Test1",7,30000.0,"Midfielder",false))
+                    storing.addPlayer(Player(0,"1988-04-02","Test2",10,40000.0,"Striker",true))
+                    storing.store()
+
+                    val loaded = PlayerController(JSONSerializer(File("players.json")))
+                    loaded.load()
+
+                    assertEquals(2, loaded.numberOfPlayers())
+                    assertEquals(storing.findPlayer(0), loaded.findPlayer(0))
+                    assertEquals(storing.findPlayer(1), loaded.findPlayer(1))
+                }
+            }
+
 
 
 
