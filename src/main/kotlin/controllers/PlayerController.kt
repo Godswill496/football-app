@@ -2,7 +2,7 @@ package ie.setu.controllers
 
 import ie.setu.models.Player
 import ie.setu.persistence.Serializer
-import ie.setu.utils.formatListString
+
 import ie.setu.utils.formatPlayerList
 
 

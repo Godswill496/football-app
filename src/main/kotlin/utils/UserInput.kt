@@ -5,10 +5,6 @@ import ie.setu.models.MatchPlayer
 import ie.setu.models.Match
 
 
-fun <T> formatListString(listToFormat: List<T>): String =
-    listToFormat
-        .joinToString(separator = "\n") { item -> "$item" }
-
 
 fun formatPlayerList(playersToFormat: List<Player>): String =
     playersToFormat.joinToString(separator = "\n") { player -> "$player" }
