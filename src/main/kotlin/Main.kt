@@ -4,18 +4,22 @@ import ie.setu.controllers.MatchController
 import ie.setu.controllers.MatchPlayerController
 import ie.setu.controllers.PlayerController
 import ie.setu.models.Player
+import ie.setu.persistence.JSONSerializer
+
 import ie.setu.utils.readNextDouble
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import java.lang.System.exit
 import io.github.oshai.kotlinlogging.KotlinLogging
-
+import java.io.File
 
 
 private val logger = KotlinLogging.logger {}
-private val playerController = PlayerController()
-private val matchController = MatchController()
-private val matchPlayerController = MatchPlayerController()
+private val playerController = PlayerController(JSONSerializer(File("players.json")))
+private val matchController = MatchController(JSONSerializer(File("matches.json")))
+private val matchPlayerController = MatchPlayerController(JSONSerializer(File("matchplayer.json")))
+
+
 
 
 
@@ -35,7 +39,9 @@ fun mainMenu(): Int {
         > |   5) Add Player to Match                 |
         > |   6) List Match Players 
         >     7) Delete Player  
-        >     8) Update Player                     |
+        >     8) Update Player 
+        >     9) Save All Data
+        >     10) Load All Data                    |
         > ------------------------------------------
         > |   0) Exit                                |
         > ------------------------------------------
@@ -59,10 +65,32 @@ fun runMenu() {
                         6 -> listMatchPlayers()
                         7 -> deletePlayer()
                         8 -> updatePlayer()
+                        9 -> saveAll()
+                        10 -> loadAll()
                         0 -> exitApp()
                         else -> println("Invalid option entered: ${option}")
                 }
         } while (true)
+}
+
+fun saveAll() {
+        try {
+                playerController.store()
+                matchController.store()
+                matchPlayerController.store()
+        } catch (e: Exception) {
+                System.err.println("Error saving data: $e")
+        }
+}
+
+fun loadAll() {
+        try {
+                playerController.load()
+                matchController.load()
+                matchPlayerController.load()
+        } catch (e: Exception) {
+                System.err.println("Error loading data: $e")
+        }
 }
 
 
@@ -145,6 +173,9 @@ fun updatePlayer() {
                         println("Invalid Player ID")
                 }
         }
+
+
+
 }
 
 

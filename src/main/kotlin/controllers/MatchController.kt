@@ -1,12 +1,13 @@
 package ie.setu.controllers
 
 import ie.setu.models.Match
-import ie.setu.utils.formatPlayerList
+import ie.setu.persistence.Serializer
 
 
-class MatchController {
+class MatchController (serializerType: Serializer) {
 
-    private val matches = mutableListOf<Match>()
+    private var serializer: Serializer = serializerType
+    private var matches = mutableListOf<Match>()
     private var lastId = 0
     private fun getId() = lastId++
 
@@ -37,6 +38,15 @@ fun deleteMatch(id: Int): Match? {
     return if (isValidListIndex(id, matches)) {
         matches.removeAt(id)
     } else null
-}}
+}
+    @Throws(Exception::class)
+    fun load() {
+        matches = serializer.read() as ArrayList<Match>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(matches)
+    }}
 
 

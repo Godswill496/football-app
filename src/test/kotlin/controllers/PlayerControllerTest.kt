@@ -6,7 +6,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import ie.setu.models.Player
+import ie.setu.persistence.JSONSerializer
+import ie.setu.persistence.XMLSerializer
 import org.junit.jupiter.api.Assertions.*
+import java.io.File
 import kotlin.test.assertFalse
 
 class PlayerControllerTest {
@@ -15,8 +18,8 @@ class PlayerControllerTest {
         private var messi: Player? = null
         private var mbappe: Player? = null
 
-        private var populatedPlayers: PlayerController? = PlayerController()
-        private var emptyPlayers: PlayerController? = PlayerController()
+        private var populatedPlayers: PlayerController? = PlayerController(XMLSerializer(File("players.xml")))
+        private var emptyPlayers: PlayerController? = PlayerController(XMLSerializer(File("empty-players.xml")))
 
         @BeforeEach
         fun setup() {
@@ -167,7 +170,74 @@ class PlayerControllerTest {
                     assertEquals(200000.0, populatedPlayers!!.findPlayer(2)!!.salary)
                     assertEquals("Winger", populatedPlayers!!.findPlayer(2)!!.preferredPlayPosition)
                 }
+
+                @Nested
+                inner class PlayerPersistenceTests {
+
+                    @Test
+                    fun `saving and loading empty player list does not crash`() {
+                        val storing = PlayerController(XMLSerializer(File("players.xml")))
+                        storing.store()
+
+                        val loaded = PlayerController(XMLSerializer(File("players.xml")))
+                        loaded.load()
+
+                        assertEquals(0, storing.numberOfPlayers())
+                        assertEquals(0, loaded.numberOfPlayers())
+                    }
+
+                    @Test
+                    fun `saving and loading populated player list retains data`() {
+                        val storing = PlayerController(XMLSerializer(File("players.xml")))
+                        val p1 = Player(0, "1990-01-01", "Ronaldo", 7, 500000.0, "Striker", false)
+                        val p2 = Player(0, "1987-06-24", "Messi", 10, 600000.0, "Forward", false)
+
+                        storing.addPlayer(p1)
+                        storing.addPlayer(p2)
+                        storing.store()
+
+                        val loaded = PlayerController(XMLSerializer(File("players.xml")))
+                        loaded.load()
+
+                        assertEquals(2, loaded.numberOfPlayers())
+                        assertEquals(p1, loaded.findPlayer(0))
+                        assertEquals(p2, loaded.findPlayer(1))
+                    }
+                }
+
             }
+            @Nested
+            inner class JsonPersistenceTests {
+
+                @Test
+                fun `saving and loading empty Player list doesn't crash`() {
+                    val storing = PlayerController(JSONSerializer(File("players.json")))
+                    storing.store()
+
+                    val loaded = PlayerController(JSONSerializer(File("players.json")))
+                    loaded.load()
+
+                    assertEquals(0, storing.numberOfPlayers())
+                    assertEquals(0, loaded.numberOfPlayers())
+                }
+
+                @Test
+                fun `saving and loading populated Player list does not lose data`() {
+                    val storing = PlayerController(JSONSerializer(File("players.json")))
+
+                    storing.addPlayer(Player(0,"1990-01-01","Test1",7,30000.0,"Midfielder",false))
+                    storing.addPlayer(Player(0,"1988-04-02","Test2",10,40000.0,"Striker",true))
+                    storing.store()
+
+                    val loaded = PlayerController(JSONSerializer(File("players.json")))
+                    loaded.load()
+
+                    assertEquals(2, loaded.numberOfPlayers())
+                    assertEquals(storing.findPlayer(0), loaded.findPlayer(0))
+                    assertEquals(storing.findPlayer(1), loaded.findPlayer(1))
+                }
+            }
+
 
 
 

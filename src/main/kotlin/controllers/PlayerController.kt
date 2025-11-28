@@ -1,12 +1,14 @@
 package ie.setu.controllers
 
 import ie.setu.models.Player
+import ie.setu.persistence.Serializer
 import ie.setu.utils.formatPlayerList
 
 
-class PlayerController {
+class PlayerController(serializerType: Serializer) {
 
-    private val players = mutableListOf<Player>()
+    private var serializer: Serializer = serializerType
+    private var players = mutableListOf<Player>()
     private var lastId = 0
     private fun getId() = lastId++
 
@@ -78,6 +80,16 @@ class PlayerController {
         }
         return false
     }
+    @Throws(Exception::class)
+    fun load() {
+        players = serializer.read() as ArrayList<Player>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(players)
+    }
+
 
 
 

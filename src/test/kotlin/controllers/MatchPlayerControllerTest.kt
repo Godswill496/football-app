@@ -1,16 +1,19 @@
 package ie.setu.controllers
 
 import ie.setu.models.MatchPlayer
+import ie.setu.persistence.JSONSerializer
+import ie.setu.persistence.XMLSerializer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import java.io.File
 
 class MatchPlayerControllerTest {
 
-    private var populatedMatchPlayerController: MatchPlayerController? = MatchPlayerController()
-    private var emptyMatchPlayerController: MatchPlayerController? = MatchPlayerController()
+    private var populatedMatchPlayerController: MatchPlayerController? = MatchPlayerController(XMLSerializer(File("matchplayer.xml")))
+    private var emptyMatchPlayerController: MatchPlayerController? = MatchPlayerController(XMLSerializer(File("empty-matchplayer.xml")))
 
     @BeforeEach
     fun setup() {
@@ -125,7 +128,84 @@ class MatchPlayerControllerTest {
                 assertEquals(2, populatedMatchPlayerController!!.numberOfMatchPlayers())
             }
         }
+        @Nested
+        inner class MatchPlayerPersistenceTests {
 
-    }
-}
+            @Test
+            fun `saving and loading an empty match player collection in XML doesn't crash app`() {
+                val storingMP = MatchPlayerController(XMLSerializer(File("matchplayers.xml")))
+                storingMP.store()
+
+                val loadedMP = MatchPlayerController(XMLSerializer(File("matchplayers.xml")))
+                loadedMP.load()
+
+                assertEquals(0, storingMP.numberOfMatchPlayers())
+                assertEquals(0, loadedMP.numberOfMatchPlayers())
+                assertEquals(storingMP.numberOfMatchPlayers(), loadedMP.numberOfMatchPlayers())
+            }
+
+            @Test
+            fun `saving and loading a populated match player collection in XML doesn't lose data`() {
+                val storingMP = MatchPlayerController(XMLSerializer(File("matchplayers.xml")))
+
+                val mp1 = MatchPlayer(0, 1, 10, "Striker", 2, true, 90)
+                val mp2 = MatchPlayer(0, 1, 11, "Winger", 1, true, 85)
+                val mp3 = MatchPlayer(0, 2, 9, "Forward", 0, false, 0)
+
+                storingMP.addPlayerToMatch(mp1)
+                storingMP.addPlayerToMatch(mp2)
+                storingMP.addPlayerToMatch(mp3)
+                storingMP.store()
+
+                val loadedMP = MatchPlayerController(XMLSerializer(File("matchplayers.xml")))
+                loadedMP.load()
+
+                assertEquals(3, storingMP.numberOfMatchPlayers())
+                assertEquals(3, loadedMP.numberOfMatchPlayers())
+                assertEquals(storingMP.findMatchPlayer(0), loadedMP.findMatchPlayer(0))
+                assertEquals(storingMP.findMatchPlayer(1), loadedMP.findMatchPlayer(1))
+                assertEquals(storingMP.findMatchPlayer(2), loadedMP.findMatchPlayer(2))
+            }
+        }
+
+        @Nested
+        inner class JsonPersistenceTests {
+
+            @Test
+            fun `saving and loading an empty match player list doesn't crash`() {
+                val storing = MatchPlayerController(JSONSerializer(File("matchplayers.json")))
+                storing.store()
+
+                val loaded = MatchPlayerController(JSONSerializer(File("matchplayers.json")))
+                loaded.load()
+
+                assertEquals(0, storing.numberOfMatchPlayers())
+                assertEquals(0, loaded.numberOfMatchPlayers())
+                assertEquals(storing.numberOfMatchPlayers(), loaded.numberOfMatchPlayers())
+            }
+
+            @Test
+            fun `saving and loading a populated match player list keeps data`() {
+                val storing = MatchPlayerController(JSONSerializer(File("matchplayers.json")))
+
+                val mp1 = MatchPlayer(0, 1, 10, "Striker", 2, true, 90)
+                val mp2 = MatchPlayer(0, 1, 11, "Midfielder", 0, true, 80)
+                val mp3 = MatchPlayer(0, 2, 12, "Defender", 1, false, 0)
+
+                storing.addPlayerToMatch(mp1)
+                storing.addPlayerToMatch(mp2)
+                storing.addPlayerToMatch(mp3)
+                storing.store()
+
+                val loaded = MatchPlayerController(JSONSerializer(File("matchplayers.json")))
+                loaded.load()
+
+                assertEquals(3, loaded.numberOfMatchPlayers())
+                assertEquals(storing.findMatchPlayer(0), loaded.findMatchPlayer(0))
+                assertEquals(storing.findMatchPlayer(1), loaded.findMatchPlayer(1))
+                assertEquals(storing.findMatchPlayer(2), loaded.findMatchPlayer(2))
+            }
+        }
+
+    }}
 
