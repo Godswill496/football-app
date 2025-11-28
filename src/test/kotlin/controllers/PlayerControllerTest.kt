@@ -253,7 +253,7 @@ class PlayerControllerTest {
 
                 @Test
                 fun `archiving a fit player marks them injured and returns true`() {
-                    // Ronaldo is fit at index 0
+
                     assertFalse(populatedPlayers!!.findPlayer(0)!!.isInjured)
 
                     val result = populatedPlayers!!.archivePlayer(0)
@@ -264,10 +264,10 @@ class PlayerControllerTest {
 
                 @Test
                 fun `archiving an already injured player returns false`() {
-                    // First archive Messi so he becomes injured
+
                     populatedPlayers!!.archivePlayer(1)
 
-                    // Try archiving him again
+
                     val result = populatedPlayers!!.archivePlayer(1)
 
                     assertFalse(result)
