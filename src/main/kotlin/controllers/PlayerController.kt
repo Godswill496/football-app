@@ -1,6 +1,8 @@
 package ie.setu.controllers
 
 import ie.setu.models.Player
+import ie.setu.utils.formatPlayerList
+
 
 class PlayerController {
 
@@ -16,8 +18,9 @@ class PlayerController {
     fun listPlayers() = players
 
     fun listPlayersBySalaryIncreasing(): List<Player> {
-        return players.sortedBy { it.salary }
+        return players.sortedBy { player -> player.salary }
     }
+
 
     fun numberOfPlayers(): Int {
         return players.size
@@ -31,5 +34,31 @@ class PlayerController {
 
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
-    }}
+    }
+
+    fun listFitPlayers(): String {
+        return if (numberOfFitPlayers() == 0) {
+            "No fit players stored"
+        } else {
+            formatPlayerList(players.filter { player -> !player.isInjured })
+        }
+    }
+
+
+    fun listInjuredPlayers(): String =
+        if (numberOfInjuredPlayers() == 0) "No injured players stored"
+        else formatPlayerList(players.filter { player -> player.isInjured })
+
+
+    fun numberOfFitPlayers(): Int =
+        players.count { player -> !player.isInjured }
+
+
+    fun numberOfInjuredPlayers(): Int {
+        return players.count { player -> player.isInjured }
+    }
+
+
+
+}
 

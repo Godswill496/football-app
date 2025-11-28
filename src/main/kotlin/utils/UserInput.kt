@@ -1,5 +1,24 @@
 package ie.setu.utils
 
+import ie.setu.models.Player
+import ie.setu.models.MatchPlayer
+import ie.setu.models.Match
+
+
+fun <T> formatListString(listToFormat: List<T>): String =
+    listToFormat
+        .joinToString(separator = "\n") { item -> "$item" }
+
+
+fun formatPlayerList(playersToFormat: List<Player>): String =
+    playersToFormat.joinToString(separator = "\n") { player -> "$player" }
+
+fun formatMatchList(matchesToFormat: List<Match>): String =
+    matchesToFormat.joinToString(separator = "\n") { match -> "$match" }
+
+fun formatMatchPlayerList(matchPlayerToFormat:  List<MatchPlayer>): String =
+    matchPlayerToFormat.joinToString(separator = "\n") { matchplayer -> "$matchplayer" }
+
 
 fun readIntNotNull() = readlnOrNull()?.toIntOrNull() ?: -1
 
