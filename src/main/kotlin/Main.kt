@@ -30,7 +30,8 @@ fun mainMenu(): Int {
         > |   3) Add Match                           |
         > |   4) List Matches                        |
         > |   5) Add Player to Match                 |
-        > |   6) List Match Players                  |
+        > |   6) List Match Players 
+        >     7) Delete Player                       |
         > ------------------------------------------
         > |   0) Exit                                |
         > ------------------------------------------
@@ -52,6 +53,7 @@ fun runMenu() {
                         4 -> listMatches()
                         5 -> addPlayerToMatch()
                         6 -> listMatchPlayers()
+                        7 -> deletePlayer()
                         0 -> exitApp()
                         else -> println("Invalid option entered: ${option}")
                 }
@@ -82,6 +84,26 @@ fun addPlayerToMatch() {
 
 fun listMatchPlayers() {
         logger.info { "listMatchPlayers() function invoked" }
+}
+
+fun deletePlayer() {
+        // logger.info { "deletePlayer() function invoked" }
+
+        listPlayers()   // show all players with their index
+        if (playerController.numberOfPlayers() > 0) {
+
+                // ask user which to delete
+                val indexToDelete = readNextInt("Enter the index of the player to delete: ")
+
+                // attempt deletion
+                val playerToDelete = playerController.deletePlayer(indexToDelete)
+
+                if (playerToDelete != null) {
+                        println("Delete Successful! Deleted player: ${playerToDelete.name}")
+                } else {
+                        println("Delete NOT Successful")
+                }
+        }
 }
 
 

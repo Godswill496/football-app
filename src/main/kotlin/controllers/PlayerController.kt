@@ -58,6 +58,13 @@ class PlayerController {
         return players.count { player -> player.isInjured }
     }
 
+    fun deletePlayer(id: Int): Player? {
+        return if (isValidListIndex(id, players)) {
+            players.removeAt(id)
+        } else null
+    }
+
+
 
 
 }

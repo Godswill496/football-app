@@ -31,5 +31,12 @@ fun findMatch(index: Int): Match? {
 
 fun isValidListIndex(index: Int, list: List<Any>): Boolean {
     return (index >= 0 && index < list.size)
+}
+
+fun deleteMatch(id: Int): Match? {
+    return if (isValidListIndex(id, matches)) {
+        matches.removeAt(id)
+    } else null
 }}
+
 
