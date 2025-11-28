@@ -39,7 +39,14 @@ class MatchPlayerController {
 
     fun isValidListIndex(index: Int, list: List<Any>): Boolean =
         (index >= 0 && index < list.size)
-}
+
+
+fun deleteMatchPlayer(id: Int): MatchPlayer? {
+    return if (isValidListIndex(id, matchPlayers)) {
+        matchPlayers.removeAt(id)
+    } else null
+}}
+
 
 
 

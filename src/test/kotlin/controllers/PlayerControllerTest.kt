@@ -2,12 +2,11 @@ package ie.setu.controllers
 
 
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import ie.setu.models.Player
+import org.junit.jupiter.api.Assertions.*
 import kotlin.test.assertFalse
 
 class PlayerControllerTest {
@@ -116,6 +115,29 @@ class PlayerControllerTest {
                 assertTrue(players.contains(messi))
                 assertTrue(players.contains(mbappe))
             }
+
+            @Nested
+            inner class DeletePlayers {
+
+                @Test
+                fun `deleting a Player that does not exist returns null`() {
+                    assertNull(emptyPlayers!!.deletePlayer(0))
+                    assertNull(populatedPlayers!!.deletePlayer(-1))
+                    assertNull(populatedPlayers!!.deletePlayer(5))
+                }
+
+                @Test
+                fun `deleting a Player that exists deletes and returns deleted object`() {
+                    assertEquals(3, populatedPlayers!!.numberOfPlayers())
+
+                    assertEquals(mbappe, populatedPlayers!!.deletePlayer(2))
+                    assertEquals(2, populatedPlayers!!.numberOfPlayers())
+
+                    assertEquals(ronaldo, populatedPlayers!!.deletePlayer(0))
+                    assertEquals(1, populatedPlayers!!.numberOfPlayers())
+                }
+            }
+
         }
     }
 

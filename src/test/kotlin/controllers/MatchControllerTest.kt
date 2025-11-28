@@ -1,12 +1,11 @@
 package ie.setu.controllers
 
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import ie.setu.models.Match
+import org.junit.jupiter.api.Assertions.*
 
 class MatchControllerTest {
 
@@ -78,5 +77,25 @@ class MatchControllerTest {
             assertTrue(list.contains(match2))
             assertTrue(list.contains(match3))
         }
+
+        @Nested
+        inner class DeleteMatches {
+
+            @Test
+            fun `deleting a Match that does not exist returns null`() {
+                assertNull(emptyMatches!!.deleteMatch(0))
+                assertNull(populatedMatches!!.deleteMatch(-1))
+                assertNull(populatedMatches!!.deleteMatch(5))
+            }
+
+            @Test
+            fun `deleting a Match that exists deletes and returns deleted object`() {
+                assertEquals(3, populatedMatches!!.numberOfMatches())
+
+                assertEquals(match3, populatedMatches!!.deleteMatch(2))
+                assertEquals(2, populatedMatches!!.numberOfMatches())
+            }
+        }
+
     }
 }

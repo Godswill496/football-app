@@ -106,6 +106,26 @@ class MatchPlayerControllerTest {
             assertTrue(result.any { matchPlayer -> matchPlayer.playerId == 10 })
             assertTrue(result.any { matchPlayer -> matchPlayer.playerId == 11 })
         }
+
+        @Nested
+        inner class DeleteMatchPlayers {
+
+            @Test
+            fun `deleting a MatchPlayer that does not exist returns null`() {
+                assertNull(emptyMatchPlayerController!!.deleteMatchPlayer(0))
+                assertNull(populatedMatchPlayerController!!.deleteMatchPlayer(-1))
+            }
+
+            @Test
+            fun `deleting a MatchPlayer that exists deletes and returns deleted object`() {
+                assertEquals(3, populatedMatchPlayerController!!.numberOfMatchPlayers())
+
+                val deleted = populatedMatchPlayerController!!.deleteMatchPlayer(1)
+                assertNotNull(deleted)
+                assertEquals(2, populatedMatchPlayerController!!.numberOfMatchPlayers())
+            }
+        }
+
     }
 }
 
