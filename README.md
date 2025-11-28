@@ -11,3 +11,28 @@ Football App was created to manage players, matches, and match-player records in
 - View match summaries with statistics like number of players played, salary costs, and preferred positions.
 - Robust input handling to prevent crashes when entering incorrect values.
 - Logging support to trace function calls and actions in the console.
+
+- Version 2.0 – New Features
+✔ Added Player, Match & MatchPlayer Filtering
+
+List played players
+
+List not played players
+
+Count played / not played
+
+List players sorted by salary
+
+✔ Added Formatting Utilities
+
+formatListString() for clean printed lists
+
+✔ Added JUnit Tests
+
+PlayerControllerTest
+
+MatchControllerTest
+
+MatchPlayerControllerTest
+
+Added new tests for filtering, searching, and counting
