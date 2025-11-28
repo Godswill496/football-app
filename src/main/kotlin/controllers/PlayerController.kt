@@ -64,6 +64,21 @@ class PlayerController {
         } else null
     }
 
+    fun updatePlayer(id: Int, updatedPlayer: Player?): Boolean {
+        val foundPlayer = findPlayer(id)
+
+        if (foundPlayer != null && updatedPlayer != null) {
+            foundPlayer.name = updatedPlayer.name
+            foundPlayer.dateOfBirth = updatedPlayer.dateOfBirth
+            foundPlayer.salary = updatedPlayer.salary
+            foundPlayer.preferredPlayPosition = updatedPlayer.preferredPlayPosition
+            foundPlayer.shirtNo = updatedPlayer.shirtNo
+            foundPlayer.isInjured = updatedPlayer.isInjured
+            return true
+        }
+        return false
+    }
+
 
 
 

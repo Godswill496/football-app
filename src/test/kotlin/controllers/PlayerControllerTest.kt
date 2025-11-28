@@ -138,6 +138,39 @@ class PlayerControllerTest {
                 }
             }
 
+            @Nested
+            inner class UpdatePlayers {
+
+                @Test
+                fun `updating a player that does not exist returns false`() {
+                    assertFalse(populatedPlayers!!.updatePlayer(99, Player(99, "X", "2000", 0, 0.0, "None", false)))
+                    assertFalse(emptyPlayers!!.updatePlayer(0, Player(0, "X", "2000", 0, 0.0, "None", false)))
+                }
+
+                @Test
+                fun `updating an existing player returns true and updates`() {
+                    assertEquals(mbappe, populatedPlayers!!.findPlayer(2))
+                    assertEquals("Mbappe", populatedPlayers!!.findPlayer(2)!!.name)
+                    assertEquals("25-12-1998", populatedPlayers!!.findPlayer(2)!!.dateOfBirth)
+                    assertEquals(25, populatedPlayers!!.findPlayer(2)!!.shirtNo)
+                    assertEquals(700000.0, populatedPlayers!!.findPlayer(2)!!.salary)
+                    assertEquals("Forward", populatedPlayers!!.findPlayer(2)!!.preferredPlayPosition)
+
+
+                    assertTrue(populatedPlayers!!.updatePlayer(2, Player(0, "2000-06-01", "Updated Player", 10, 200000.0, "Winger", false)
+                        )
+                    )
+
+                    assertEquals("Updated Player", populatedPlayers!!.findPlayer(2)!!.name)
+                    assertEquals("2000-06-01", populatedPlayers!!.findPlayer(2)!!.dateOfBirth)
+                    assertEquals(10, populatedPlayers!!.findPlayer(2)!!.shirtNo)
+                    assertEquals(200000.0, populatedPlayers!!.findPlayer(2)!!.salary)
+                    assertEquals("Winger", populatedPlayers!!.findPlayer(2)!!.preferredPlayPosition)
+                }
+            }
+
+
+
         }
     }
 

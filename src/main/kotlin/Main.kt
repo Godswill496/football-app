@@ -3,7 +3,10 @@ package ie.setu
 import ie.setu.controllers.MatchController
 import ie.setu.controllers.MatchPlayerController
 import ie.setu.controllers.PlayerController
+import ie.setu.models.Player
+import ie.setu.utils.readNextDouble
 import ie.setu.utils.readNextInt
+import ie.setu.utils.readNextLine
 import java.lang.System.exit
 import io.github.oshai.kotlinlogging.KotlinLogging
 
@@ -31,7 +34,8 @@ fun mainMenu(): Int {
         > |   4) List Matches                        |
         > |   5) Add Player to Match                 |
         > |   6) List Match Players 
-        >     7) Delete Player                       |
+        >     7) Delete Player  
+        >     8) Update Player                     |
         > ------------------------------------------
         > |   0) Exit                                |
         > ------------------------------------------
@@ -54,6 +58,7 @@ fun runMenu() {
                         5 -> addPlayerToMatch()
                         6 -> listMatchPlayers()
                         7 -> deletePlayer()
+                        8 -> updatePlayer()
                         0 -> exitApp()
                         else -> println("Invalid option entered: ${option}")
                 }
@@ -87,15 +92,14 @@ fun listMatchPlayers() {
 }
 
 fun deletePlayer() {
-        // logger.info { "deletePlayer() function invoked" }
 
-        listPlayers()   // show all players with their index
+        listPlayers()
         if (playerController.numberOfPlayers() > 0) {
 
-                // ask user which to delete
+
                 val indexToDelete = readNextInt("Enter the index of the player to delete: ")
 
-                // attempt deletion
+
                 val playerToDelete = playerController.deletePlayer(indexToDelete)
 
                 if (playerToDelete != null) {
@@ -105,6 +109,44 @@ fun deletePlayer() {
                 }
         }
 }
+
+fun updatePlayer() {
+        listPlayers()
+
+        if (playerController.numberOfPlayers() > 0) {
+
+                val idToUpdate = readNextInt("Enter ID of the player to update: ")
+
+                if (playerController.findPlayer(idToUpdate) != null) {
+
+                        val name = readNextLine("Enter new name: ")
+                        val dob = readNextLine("Enter new date of birth: ")
+                        val shirtNo = readNextInt("Enter new shirt number: ")
+                        val salary = readNextDouble("Enter new salary: ")
+                        val pos = readNextLine("Enter preferred play position: ")
+                        val injured = readNextLine("Is player injured (true/false): ").toBoolean()
+
+                        val updated = Player(
+                                playerId = idToUpdate,
+                                name = name,
+                                dateOfBirth = dob,
+                                shirtNo = shirtNo,
+                                salary = salary,
+                                preferredPlayPosition = pos,
+                                isInjured = injured
+                        )
+
+                        if (playerController.updatePlayer(idToUpdate, updated))
+                                println("Update Successful")
+                        else
+                                println("Update Failed")
+
+                } else {
+                        println("Invalid Player ID")
+                }
+        }
+}
+
 
 
 fun exitApp() {
