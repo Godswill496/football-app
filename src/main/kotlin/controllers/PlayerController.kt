@@ -2,6 +2,7 @@ package ie.setu.controllers
 
 import ie.setu.models.Player
 import ie.setu.persistence.Serializer
+import ie.setu.utils.formatListString
 import ie.setu.utils.formatPlayerList
 
 
@@ -90,9 +91,22 @@ class PlayerController(serializerType: Serializer) {
         serializer.write(players)
     }
 
+    fun archivePlayer(id: Int): Boolean {
+        val foundPlayer = findPlayer(id)
+
+        return if (foundPlayer != null && !foundPlayer.isInjured) {
+            foundPlayer.isInjured = true
+            true
+        } else {
+            false
+        }
+    }
 
 
+    fun listFitPlayersWithIndex() {
+        if (numberOfFitPlayers() == 0)
+            "No fit players stored"
+        else
+            formatPlayerList(players.filter { player -> !player.isInjured })
 
-
-}
-
+    }}

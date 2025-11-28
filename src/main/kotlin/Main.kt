@@ -41,7 +41,8 @@ fun mainMenu(): Int {
         >     7) Delete Player  
         >     8) Update Player 
         >     9) Save All Data
-        >     10) Load All Data                    |
+        >     10) Load All Data      
+        >     11) Archive Player                     |
         > ------------------------------------------
         > |   0) Exit                                |
         > ------------------------------------------
@@ -67,13 +68,28 @@ fun runMenu() {
                         8 -> updatePlayer()
                         9 -> saveAll()
                         10 -> loadAll()
+                        11 -> ArchivePlayer()
                         0 -> exitApp()
                         else -> println("Invalid option entered: ${option}")
                 }
         } while (true)
 }
 
-fun saveAll() {
+fun ArchivePlayer() {
+        println(playerController.listFitPlayersWithIndex())
+        if (playerController.numberOfFitPlayers() > 0) {
+                val id = readNextInt("Enter the index of the player to archive (mark injured): ")
+                if (playerController.archivePlayer(id)) {
+                        println("Archive Successful")
+                } else {
+                        println("Archive NOT Successful.")
+                }
+        }
+}
+
+
+
+        fun saveAll() {
         try {
                 playerController.store()
                 matchController.store()
@@ -177,6 +193,7 @@ fun updatePlayer() {
 
 
 }
+
 
 
 
