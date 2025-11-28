@@ -4,10 +4,8 @@ import ie.setu.controllers.MatchController
 import ie.setu.controllers.MatchPlayerController
 import ie.setu.controllers.PlayerController
 import ie.setu.models.Player
-import ie.setu.models.Match
-import ie.setu.models.MatchPlayer
 import ie.setu.persistence.JSONSerializer
-import ie.setu.persistence.XMLSerializer
+
 import ie.setu.utils.readNextDouble
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
