@@ -1,0 +1,22 @@
+<object-stream>
+  <list>
+    <ie.setu.models.Match>
+      <matchId>0</matchId>
+      <matchName>Barcelona vs Madrid</matchName>
+      <matchLocation>Camp Nou</matchLocation>
+      <managerOnDuty>Ancelotti</managerOnDuty>
+    </ie.setu.models.Match>
+    <ie.setu.models.Match>
+      <matchId>1</matchId>
+      <matchName>PSG vs Bayern</matchName>
+      <matchLocation>Parc des Princes</matchLocation>
+      <managerOnDuty>Luis Enrique</managerOnDuty>
+    </ie.setu.models.Match>
+    <ie.setu.models.Match>
+      <matchId>2</matchId>
+      <matchName>Chelsea vs Arsenal</matchName>
+      <matchLocation>Stamford Bridge</matchLocation>
+      <managerOnDuty>Arteta</managerOnDuty>
+    </ie.setu.models.Match>
+  </list>
+</object-stream>

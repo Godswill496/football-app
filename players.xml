@@ -1,0 +1,22 @@
+<object-stream>
+  <list>
+    <ie.setu.models.Player>
+      <playerId>0</playerId>
+      <dateOfBirth>1990-01-01</dateOfBirth>
+      <name>Ronaldo</name>
+      <shirtNo>7</shirtNo>
+      <salary>500000.0</salary>
+      <preferredPlayPosition>Striker</preferredPlayPosition>
+      <isInjured>false</isInjured>
+    </ie.setu.models.Player>
+    <ie.setu.models.Player>
+      <playerId>1</playerId>
+      <dateOfBirth>1987-06-24</dateOfBirth>
+      <name>Messi</name>
+      <shirtNo>10</shirtNo>
+      <salary>600000.0</salary>
+      <preferredPlayPosition>Forward</preferredPlayPosition>
+      <isInjured>false</isInjured>
+    </ie.setu.models.Player>
+  </list>
+</object-stream>

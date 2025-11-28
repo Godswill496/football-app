@@ -1,0 +1,31 @@
+<object-stream>
+  <list>
+    <ie.setu.models.MatchPlayer>
+      <id>0</id>
+      <matchId>1</matchId>
+      <playerId>10</playerId>
+      <playPosition>Striker</playPosition>
+      <goalScore>2</goalScore>
+      <isPlayed>true</isPlayed>
+      <numMinsPlayed>90</numMinsPlayed>
+    </ie.setu.models.MatchPlayer>
+    <ie.setu.models.MatchPlayer>
+      <id>1</id>
+      <matchId>1</matchId>
+      <playerId>11</playerId>
+      <playPosition>Winger</playPosition>
+      <goalScore>1</goalScore>
+      <isPlayed>true</isPlayed>
+      <numMinsPlayed>85</numMinsPlayed>
+    </ie.setu.models.MatchPlayer>
+    <ie.setu.models.MatchPlayer>
+      <id>2</id>
+      <matchId>2</matchId>
+      <playerId>9</playerId>
+      <playPosition>Forward</playPosition>
+      <goalScore>0</goalScore>
+      <isPlayed>false</isPlayed>
+      <numMinsPlayed>0</numMinsPlayed>
+    </ie.setu.models.MatchPlayer>
+  </list>
+</object-stream>
