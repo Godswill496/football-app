@@ -59,7 +59,7 @@ fun runMenu() {
                 val option = mainMenu()
                 when (option) {
                         1 -> addPlayer()
-                        2 -> listPlayers()
+                        2 -> listPlayersMenu()
                         3 -> addMatch()
                         4 -> listMatches()
                         5 -> addPlayerToMatch()
@@ -74,6 +74,35 @@ fun runMenu() {
                 }
         } while (true)
 }
+
+
+fun listPlayersMenu() {
+        println(
+                """
+        |----------------------------
+        |      LIST PLAYERS MENU
+        |----------------------------
+        | 1) List ALL players
+        | 2) List FIT players
+        | 3) List INJURED players
+        |----------------------------
+        | 0) Back to Main Menu
+        |----------------------------
+        """.trimMargin()
+        )
+
+        when (readNextInt("Select an option: ")) {
+                1 -> println(playerController.listPlayers())
+                2 -> println(playerController.listFitPlayers())
+                3 -> println(playerController.listInjuredPlayers())
+                0 -> return
+                else -> println("Invalid option")
+        }
+}
+
+
+
+
 
 fun ArchivePlayer() {
         println(playerController.listFitPlayersWithIndex())
